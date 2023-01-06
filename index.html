@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="canvas1"></canvas>
+    <div class="menu">
+        <h2>Simulation:</h2>
+        Speed <br>
+        <input type="range" min="1" max="20" class="slider" id="s1"> <i1 class="info"></i1> <br>
+        Gravitational Constant (m/s^2)<br>
+        <input type="range" min="1" max="200" class="slider" id="s2"> <i2 class="info"></i2> <br>
+        Damping <br>
+        <input type="range" min="10" max="40" class="slider" id="s3"> <i3 class="info"></i3> <br>
+        <div class="line"></div>
+        <h2>Projectile:</h2>
+        Initial Angle (degrees) <br>
+        <input type="range" min="0" max="90" class="slider" id="s4"> <i4 class="info"></i4> <br>
+        Initial Velocity (m/s) <br>
+        <input type="range" min="0" max="16" class="slider" id="s4"> <i4 class="info"></i4> <br>
+        <div class="line"></div>
+        <h2>Calculation:</h2>
+        <i5 class="info">bro</i5> <br>
+        <i6 class="info">bro</i6> <br>
+        <i7 class="info">bro</i7> <br>
+        <div class="line"></div><br>
+        <button onclick="run()" id="run">Start</button>
+    </div>
+</body>
+
+<script src="lib/drawUtils.js"></script>
+<script src="lib/ruler.js"></script>
+<script src="lib/cam.js"></script>
+<script src="lib/convert.js"></script>
+<script src="classes/projectile.js"></script>
+<script src="lib/sliders.js"></script>
+<script src="main.js"></script>
+</html>

@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+#canvas1 {
+    margin: 0;
+    position: absolute;
+}
+
+.menu {
+    background-color: black;
+    position: absolute;
+    width: 250px;
+    height: 100vh;
+    color: white;
+    text-align: center;
+    font-size: 17px;
+    line-height: 30px;
+}
+
+button {
+    padding: 10px;
+    font-size: 20px;
+}
+
+.line {
+    border-bottom: 2px solid white;
+    width: 100%;
+  }
