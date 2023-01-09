@@ -45,6 +45,15 @@ function updateProjectiles() {
     });
 }
 
+document.onkeydown = function(e) {
+    if (e.key == " " ||
+        e.code == "Space" ||      
+        e.keyCode == 32      
+    ) {
+      run();
+    }
+  }
+
 
 projectiles[0].predict();
 
