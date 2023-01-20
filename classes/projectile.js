@@ -5,6 +5,7 @@ var sim1 = {
     speed: 1,
     stopped: false,
     landed: false,
+    trajectory: []
 }
 
 class projectile {
@@ -64,11 +65,8 @@ class projectile {
                 this.draw();
                 if(!simulation.landed) {
                     airtime += (1000/60) * sim1.speed;
+                    graph1.points.push({x: (this.x + cam.x - 250 - this.r), y: (this.y + cam.y) - renderer.h, time: airtime})
                 }
-                else {
-                    console.log((airtime - pretime)/1000);
-                }
-                // console.log(airtime);
             }
             else {
                 this.draw();
@@ -81,7 +79,20 @@ class projectile {
         }
         else {
             this.draw();
-            drawLine((this.x + cam.x + 50)/cam.curscale, (this.y + cam.y)/cam.curscale, (this.x + cam.x + 50)/cam.curscale, renderer.h, "white");
+
+            drawLine((this.x + cam.x - this.r)/cam.curscale, (this.y + cam.y - 25)/cam.curscale - this.r/cam.curscale, 0, (this.y + cam.y - 25)/cam.curscale - this.r/cam.curscale, "white");
+            drawLine((this.x + cam.x - this.r)/cam.curscale, (this.y + cam.y - 25)/cam.curscale - this.r/cam.curscale, (this.x + cam.x - this.r)/cam.curscale, (this.y + cam.y)/cam.curscale - this.r/cam.curscale, "white");
+            drawLine(251, (this.y + cam.y - 25)/cam.curscale - this.r/cam.curscale, 251, (this.y + cam.y)/cam.curscale - this.r/cam.curscale, "white");
+
+
+            drawLine((this.x + cam.x + 50)/cam.curscale, (this.y + cam.y)/cam.curscale + this.r/cam.curscale, (this.x + cam.x + 50)/cam.curscale, renderer.h, "white");
+            drawLine((this.x + cam.x + 25)/cam.curscale, (this.y + cam.y)/cam.curscale + this.r/cam.curscale, (this.x + cam.x + 50)/cam.curscale, (this.y + cam.y)/cam.curscale + this.r/cam.curscale, "white");
+            drawLine((this.x + cam.x + 25)/cam.curscale, renderer.h - 1, (this.x + cam.x + 50)/cam.curscale, renderer.h - 1, "white");
+            ctx.fillStyle = "white";
+            ctx.font = "20px Arial";
+            ctx.fillText((((renderer.h - (cam.y + this.r + this.y)/cam.curscale) * cam.curscale) / (3.73 * 100/6 * 3.74)).toPrecision(2) + " m", (this.x + cam.x + 70)/cam.curscale, (renderer.h - (this.y + cam.y)/cam.curscale)/2 + (this.y + cam.y)/cam.curscale);
+
+            ctx.fillText(((((cam.x - this.r + this.x)/cam.curscale - 250) * cam.curscale) / (3.73 * 100/6 * 3.74)).toPrecision(2) + " m", ((this.x + cam.x + 50)/cam.curscale - 251)/2 + 251, (this.y + cam.y - 25)/cam.curscale - this.r/cam.curscale - 20);
         }
     }
     predict() {
@@ -92,15 +103,20 @@ class projectile {
         // drawFillCircle((this.x + dist/2 * 3.74 * 100/6 * 3.74 + cam.x)/cam.curscale, (this.y - height * 3.74 * 100/6 * 3.74 + cam.y)/cam.curscale, this.r/cam.curscale, this.color);
         // drawFillCircle((this.x + dist * 3.74 * 100/6 * 3.74 + cam.x)/cam.curscale, (this.y + cam.y)/cam.curscale, this.r/cam.curscale, this.color);
 
-        drawCircle((this.x + dist/2 * 3.74 * 100/6 * 3.74 + cam.x)/cam.curscale, (this.y - height * 3.74 * 100/6 * 3.74 + cam.y)/cam.curscale, this.r/cam.curscale, this.color, 5)
-        drawCircle((this.x + dist * 3.74 * 100/6 * 3.74 + cam.x)/cam.curscale, (this.y + cam.y)/cam.curscale, this.r/cam.curscale, this.color);
+        drawCircle((this.x + dist/2 * 3.73 * 100/6 * 3.74 + cam.x)/cam.curscale, (this.y - height * 3.73 * 100/6 * 3.74 + cam.y)/cam.curscale, this.r/cam.curscale, this.color, 5)
+        drawCircle((this.x + dist * 3.73 * 100/6 * 3.74 + cam.x)/cam.curscale, (this.y + cam.y)/cam.curscale, this.r/cam.curscale, this.color);
 
         pretime = time * 1000;
         document.querySelector("i5").innerHTML = "Time of flight: " + time.toPrecision(2) + " s";
         document.querySelector("i6").innerHTML = "Maximum Height: " + height.toPrecision(2) + " m";
         document.querySelector("i7").innerHTML = "Horizontal Distance (Range): " + dist.toPrecision(2) + " m";
 
-        cam.scale = clamp(1, 100, (dist * 3.74 * 100/6 * 3.74 + 300 * dist/3)/renderer.w);
+        if(clamp(1, 100, (dist * 3.73 * 100/6 * 3.74 + 300 * dist/3)/renderer.w) > clamp(1, 100, (height * 3.73 * 100/6 * 3.74 + 300 * height/3)/renderer.h)) {
+            cam.scale = clamp(1, 100, (dist * 3.73 * 100/6 * 3.74 + 300 * dist/3)/renderer.w);
+        }
+        else {
+            cam.scale = clamp(1, 100, (height * 3.73 * 100/6 * 3.74 + 300 * height/3)/renderer.h);
+        }
         updateCamera();
     }
     draw() {

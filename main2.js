@@ -17,6 +17,7 @@ function update() {
     updateCamera();
     drawRuler();
     updateTimer();
+    graph1.update();
 }
 
 function updateTimer() {
@@ -45,6 +46,7 @@ function run() {
         sim1.stopped = false;
         sim1.landed = false;
         airtime = -2000/60;
+        graph1.points = [];
         document.querySelector("#Pause").innerHTML = "Pause";   
     }
     else {
@@ -68,6 +70,20 @@ function stop() {
     }
 }
 
+function view() {
+    switch (graph1.view) {
+        case false:
+            graph1.view = true;
+            document.querySelector(".view").innerHTML = "Hide Graph";
+            break;
+    
+        default:
+            document.querySelector(".view").innerHTML = "View Graph";
+            graph1.view = false;
+            break;
+    }
+}
+
 function updateProjectiles() {
     projectiles.forEach(i => {
         i.update(sim1);
@@ -75,11 +91,11 @@ function updateProjectiles() {
 }
 
 document.onkeydown = function(e) {
-    if (e.key == " " ||
-        e.code == "Space" ||      
-        e.keyCode == 32      
-    ) {
-      run();
+    if (e.code == "p" || e.keyCode == 80) {
+      stop();
+    }
+    else if(e.code == "s" || e.keyCode == 83) {
+        run();
     }
   }
 
